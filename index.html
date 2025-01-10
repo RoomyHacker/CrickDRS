@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CrickDRS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000; /* Background set to black */
+    }
+
+    .container {
+      text-align: center;
+      width: 100%;
+      max-width: 600px;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+      background-color: #1e1e1e;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .video {
+      width: 100%;
+      max-width: 100%;
+      border: 3px solid #fff;
+      border-radius: 10px;
+      background-color: black;
+    }
+
+    .controls {
+      margin-top: 20px;
+    }
+
+    .btn {
+      background: #4caf50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      margin: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: #45a049;
+      transform: scale(1.1);
+    }
+
+    .upload-section {
+      margin-top: 20px;
+    }
+
+    .upload-btn {
+      background: #ff4500;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .upload-btn:hover {
+      background: #ff6347;
+      transform: scale(1.05);
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CrickDRS</h1>
+    <video id="video" class="video"></video>
+    <div class="controls">
+      <button id="backward" class="btn">⏪ Backward</button>
+      <button id="forward" class="btn">⏩ Forward</button>
+    </div>
+    <div class="upload-section">
+      <label for="fileUpload" class="upload-btn">📂 Upload Video</label>
+      <input type="file" id="fileUpload" accept="video/*">
+    </div>
+  </div>
+
+  <script>
+    const video = document.getElementById('video');
+    const fileUpload = document.getElementById('fileUpload');
+    const forwardButton = document.getElementById('forward');
+    const backwardButton = document.getElementById('backward');
+
+    // File upload functionality
+    fileUpload.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const fileURL = URL.createObjectURL(file);
+        video.src = fileURL;
+        video.load(); // Load the video without playing it
+      }
+    });
+
+    // Forward button functionality (0.50 seconds forward)
+    forwardButton.addEventListener('click', () => {
+      if (video.readyState >= 2 && video.currentTime < video.duration) {
+        video.currentTime = Math.min(video.currentTime + 0.50, video.duration); // Move 0.50 seconds forward
+        video.play();
+        setTimeout(() => {
+          video.pause();
+        }, 500); // Pause after 0.50 seconds
+      }
+    });
+
+    // Backward button functionality (0.50 seconds backward)
+    backwardButton.addEventListener('click', () => {
+      if (video.readyState >= 2) {
+        video.currentTime = Math.max(0, video.currentTime - 0.50); // Move 0.50 seconds backward
+        video.play();
+        setTimeout(() => {
+          video.pause();
+        }, 500); // Pause after 0.50 seconds
+      }
+    });
+
+    // Stop the video when it reaches the end
+    video.addEventListener('ended', () => {
+      video.pause(); // Ensure the video is paused
+    });
+  </script>
+</body>
+</html>
