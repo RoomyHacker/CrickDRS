@@ -98,7 +98,9 @@
     <video id="video" class="video"></video>
     <div class="controls">
       <button id="backward" class="btn">⏪ Backward</button>
+      <button id="backward-fast" class="btn">⏪ Backward (Fast)</button>
       <button id="forward" class="btn">⏩ Forward</button>
+      <button id="forward-fast" class="btn">⏩ Forward (Fast)</button>
     </div>
     <div class="upload-section">
       <label for="fileUpload" class="upload-btn">📂 Upload Video</label>
@@ -111,6 +113,8 @@
     const fileUpload = document.getElementById('fileUpload');
     const forwardButton = document.getElementById('forward');
     const backwardButton = document.getElementById('backward');
+    const forwardFastButton = document.getElementById('forward-fast');
+    const backwardFastButton = document.getElementById('backward-fast');
 
     // File upload functionality
     fileUpload.addEventListener('change', (event) => {
@@ -141,6 +145,28 @@
         setTimeout(() => {
           video.pause();
         }, 100); // Pause after 0.10 seconds
+      }
+    });
+
+    // Forward (Fast) button functionality (2 seconds forward)
+    forwardFastButton.addEventListener('click', () => {
+      if (video.readyState >= 2 && video.currentTime < video.duration) {
+        video.currentTime = Math.min(video.currentTime + 2, video.duration); // Move 2 seconds forward
+        video.play();
+        setTimeout(() => {
+          video.pause();
+        }, 2000); // Pause after 2 seconds
+      }
+    });
+
+    // Backward (Fast) button functionality (2 seconds backward)
+    backwardFastButton.addEventListener('click', () => {
+      if (video.readyState >= 2) {
+        video.currentTime = Math.max(0, video.currentTime - 2); // Move 2 seconds backward
+        video.play();
+        setTimeout(() => {
+          video.pause();
+        }, 2000); // Pause after 2 seconds
       }
     });
 
