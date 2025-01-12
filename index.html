@@ -122,25 +122,25 @@
       }
     });
 
-    // Forward button functionality (0.50 seconds forward)
+    // Forward button functionality (0.10 seconds forward)
     forwardButton.addEventListener('click', () => {
       if (video.readyState >= 2 && video.currentTime < video.duration) {
-        video.currentTime = Math.min(video.currentTime + 0.50, video.duration); // Move 0.50 seconds forward
+        video.currentTime = Math.min(video.currentTime + 0.10, video.duration); // Move 0.10 seconds forward
         video.play();
         setTimeout(() => {
           video.pause();
-        }, 500); // Pause after 0.50 seconds
+        }, 100); // Pause after 0.10 seconds
       }
     });
 
-    // Backward button functionality (0.50 seconds backward)
+    // Backward button functionality (0.10 seconds backward)
     backwardButton.addEventListener('click', () => {
       if (video.readyState >= 2) {
-        video.currentTime = Math.max(0, video.currentTime - 0.50); // Move 0.50 seconds backward
+        video.currentTime = Math.max(0, video.currentTime - 0.10); // Move 0.10 seconds backward
         video.play();
         setTimeout(() => {
           video.pause();
-        }, 500); // Pause after 0.50 seconds
+        }, 100); // Pause after 0.10 seconds
       }
     });
 
